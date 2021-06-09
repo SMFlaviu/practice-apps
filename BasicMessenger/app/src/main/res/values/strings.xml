@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BasicMessenger</string>
+    <string name="send">Send Message</string>
+</resources>
