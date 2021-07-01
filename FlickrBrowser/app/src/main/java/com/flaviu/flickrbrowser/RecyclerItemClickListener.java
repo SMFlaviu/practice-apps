@@ -10,7 +10,6 @@ import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
-    private static final String TAG = "RecyclerItemClickListen";
 
     interface OnRecyclerClickListener {
         void onItemClick(View view , int position);
@@ -27,7 +26,6 @@ class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
             public boolean onSingleTapUp(MotionEvent e) {
                 View childView = recyclerView.findChildViewUnder(e.getX(),e.getY());
                 if(childView != null){
-                    Log.d(TAG, "onSingleTapUp: calling listener.onitemclick");
                     mListener.onItemClick(childView, recyclerView.getChildAdapterPosition(childView));
                 }
                 return true;
@@ -35,10 +33,8 @@ class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                Log.d(TAG, "onLongPress: starts");
                 View childView = recyclerView.findChildViewUnder(e.getX(),e.getY());
                 if (childView != null){
-                    Log.d(TAG, "onLongPress: callinglistener on long press");
                     mListener.onItemLongClick(childView,recyclerView.getChildAdapterPosition(childView));
                 }
             }
@@ -49,12 +45,10 @@ class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv,MotionEvent e) {
-        Log.d(TAG, "onInterceptTouchEvent: starts");
         if(gestureDetector != null ){
             boolean result = gestureDetector.onTouchEvent(e);
             return result;
         } else {
-            Log.d(TAG, "onInterceptTouchEvent: returned false");
         }
         return false;
 

@@ -7,19 +7,18 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-public class MainActivity extends AppCompatActivity implements WorkoutListFragment.WorkoutListListener{
+public class MainActivity extends AppCompatActivity implements WorkoutListFragment.WorkoutListListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
     }
 
     @Override
     public void itemClicked(long id) {
         View fragmentContainer = findViewById(R.id.fragment_container);
-        if(fragmentContainer !=null ) {
+        if (fragmentContainer != null) {
             WorkoutDetailFragment details = new WorkoutDetailFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             details.setWorkoutId(id);
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutListFragme
             fragmentTransaction.commit();
         } else {
             Intent intent = new Intent(this, DetailActivity.class);
-            intent.putExtra(DetailActivity.EXTRA_WORKOUT_ID, (int)id);
+            intent.putExtra(DetailActivity.EXTRA_WORKOUT_ID, (int) id);
             startActivity(intent);
         }
     }

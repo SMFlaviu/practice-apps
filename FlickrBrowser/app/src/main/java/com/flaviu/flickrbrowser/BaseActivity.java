@@ -1,5 +1,6 @@
 package com.flaviu.flickrbrowser;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.ActionBar;
@@ -11,8 +12,12 @@ public class BaseActivity extends AppCompatActivity {
     public static final String FLICKR_QUERRY = "FLICKR_QUERRY";
     public static final String PHOTO_TRANSFER ="PHOTO_TRANSFER";
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     void activateToolbar (boolean enableHome){
-        Log.d(TAG, "activateToolbar: ");
         ActionBar actionBar = getSupportActionBar();
         if(actionBar == null){
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

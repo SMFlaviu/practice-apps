@@ -47,13 +47,5 @@ public class FeedEntry {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-
-//    @Override
-//    public String toString() {
-//        return "name=" + name + '\n' +
-//                ", artist=" + artist + '\n' +
-//                ", releaseDate=" + releaseDate + '\n' +
-//                ", imageURL=" + imageURL + '\n';
-//    }
 }
 

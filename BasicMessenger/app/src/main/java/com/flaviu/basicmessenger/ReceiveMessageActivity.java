@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import static com.flaviu.basicmessenger.CreateMessageActivity.MESSAGE_INTENT;
+
 public class ReceiveMessageActivity extends AppCompatActivity {
 
     @Override
@@ -16,8 +18,7 @@ public class ReceiveMessageActivity extends AppCompatActivity {
         TextView messageReceive = (TextView) findViewById(R.id.message);
 
         Intent intent = getIntent();
-        String string = intent.getStringExtra("message");
+        String string = intent.getStringExtra(MESSAGE_INTENT);
         messageReceive.setText(string);
-
     }
 }

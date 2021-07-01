@@ -10,15 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String STATE_PENDING_OPERATION = "PendingOperation";
+    private static final String STATE_OPERAND1 = "Operand1";
     private EditText result;
     private TextView displayOperation;
     private EditText newNumber;
-
     private Double operand1 = null;
     private String pendingOperation = "=";
-
-    private static final String STATE_PENDING_OPERATION = "PendingOperation";
-    private static final String STATE_OPERAND1 = "Operand1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +37,17 @@ public class MainActivity extends AppCompatActivity {
         Button button7 = (Button) findViewById(R.id.button7);
         Button button8 = (Button) findViewById(R.id.button8);
         Button button9 = (Button) findViewById(R.id.button9);
-        Button buttonClear = (Button)findViewById(R.id.buttonClear);
+        Button buttonClear = (Button) findViewById(R.id.buttonClear);
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    pendingOperation= "=";
+                    pendingOperation = "=";
                     operand1 = 0.0;
                     result.setText("");
                     displayOperation.setText("");
-                }catch (NumberFormatException e) {
-                newNumber.setText("");
+                } catch (NumberFormatException e) {
+                    newNumber.setText("");
                 }
             }
         });
@@ -60,19 +58,19 @@ public class MainActivity extends AppCompatActivity {
         Button buttonMinus = (Button) findViewById(R.id.buttonMinus);
         Button buttonDot = (Button) findViewById(R.id.buttonDot);
         Button buttonEqual = (Button) findViewById(R.id.buttonEqual);
-        Button buttonNeg = (Button)findViewById(R.id.buttonNeg);
+        Button buttonNeg = (Button) findViewById(R.id.buttonNeg);
         buttonNeg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String value = newNumber.getText().toString();
-                if (value.length()==0){
+                if (value.length() == 0) {
                     newNumber.setText("-");
-                }else{
+                } else {
                     try {
                         Double doubleValue = Double.valueOf(value);
                         doubleValue *= -1;
                         newNumber.setText(doubleValue.toString());
-                    }catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         newNumber.setText("");
                     }
                 }
@@ -81,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Button b = (Button) v;
-            newNumber.append(b.getText().toString());
+                Button b = (Button) v;
+                newNumber.append(b.getText().toString());
             }
         };
         button0.setOnClickListener(listener);
@@ -119,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
         buttonMinus.setOnClickListener(opListener);
         buttonMultiply.setOnClickListener(opListener);
         buttonPlus.setOnClickListener(opListener);
-        }
+    }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(STATE_PENDING_OPERATION, pendingOperation);

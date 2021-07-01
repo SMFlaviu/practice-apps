@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 public class FeedAdapter extends ArrayAdapter {
-    private static final String TAG = "FeedAdapter";
     private final int layoutResource;
     private final LayoutInflater layoutInflater;
     private List<FeedEntry> applications;
@@ -38,12 +37,7 @@ public class FeedAdapter extends ArrayAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        // TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
-        //TextView tvArtist = (TextView) convertView.findViewById(R.id.tvArtist);
-        //TextView tvSummary = (TextView) convertView.findViewById(R.id.tvSummary);
-
         FeedEntry currentApp = applications.get(position);
-
 
         viewHolder.tvName.setText(currentApp.getName());
         viewHolder.tvArtist.setText(currentApp.getArtist());

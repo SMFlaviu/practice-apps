@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,12 +28,10 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView contactNames;
-    private static final String TAG = "MainActivity";
-
+    
     private static final int REQUEST_CODE_READ_CONTACTS = 1;
-//    private static boolean READ_CONTACTS_GRANTED = false;
     FloatingActionButton fab = null;
+    private ListView contactNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +40,9 @@ public class MainActivity extends AppCompatActivity {
         contactNames = (ListView) findViewById(R.id.contact_names);
 
         int hasReadContactsPermission = ContextCompat.checkSelfPermission(this, READ_CONTACTS);
-        Log.d(TAG, "onCreate: Check self permission = "+hasReadContactsPermission);
 
-//        if(hasReadContactsPermission == PackageManager.PERMISSION_GRANTED){
-//            Log.d(TAG, "onCreate: Permission request");
-//            READ_CONTACTS_GRANTED = true;
-//        } else{
-//            Log.d(TAG, "onCreate:  Permission denied");
-//            ActivityCompat.requestPermissions(this,new String[]{READ_CONTACTS},REQUEST_CODE_READ_CONTACTS);
-//        }
-
-        if(hasReadContactsPermission != PackageManager.PERMISSION_GRANTED){
-            Log.d(TAG, "onCreate: Requesting permission");
-            ActivityCompat.requestPermissions(this, new String[] {READ_CONTACTS},REQUEST_CODE_READ_CONTACTS);
+        if (hasReadContactsPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
         }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -65,85 +51,52 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                    if(!READ_CONTACTS_GRANTED)
-                    if(ContextCompat.checkSelfPermission(MainActivity.this,READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
-                    Snackbar.make(view, "This app can't display you Contacts records unless you ... ", Snackbar.LENGTH_INDEFINITE).setAction("GRANT ACCESS", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.d(TAG, "onClick: starts");
-                            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, READ_CONTACTS)){
-                                Log.d(TAG, "onClick: calling request permissions");
-                                ActivityCompat.requestPermissions(MainActivity.this, new  String[] {READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
-                            } else {
-                                // user tick the box -> go to settings
-                                Log.d(TAG, "onClick: launching settings");
-                                Intent intent = new Intent();
-                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri  = Uri.fromParts("package",MainActivity.this.getPackageName(),null);
-                                intent.setData(uri);
-                                MainActivity.this.startActivity(intent);
+                if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                    Snackbar.make(view, "This app can't display you Contacts records unless you ... ", Snackbar.LENGTH_INDEFINITE).setAction(R.string.grant_acces, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, READ_CONTACTS)) {
+                                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
+                                    } else {
+                                        Intent intent = new Intent();
+                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", MainActivity.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        MainActivity.this.startActivity(intent);
+                                    }
+                                }
                             }
-                            Log.d(TAG, "onClick:  ends");
-                        }
-                    }
                     ).show();
-                    } else {
+                } else {
 
-                        Log.d(TAG, "onClick: Fab on clickStarts");
-                        String[] projection = {ContactsContract.Contacts.DISPLAY_NAME_PRIMARY};
-                        ContentResolver contentResolver = getContentResolver();
-                        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, projection, null, null, ContactsContract.Contacts.DISPLAY_NAME_PRIMARY);
+                    String[] projection = {ContactsContract.Contacts.DISPLAY_NAME_PRIMARY};
+                    ContentResolver contentResolver = getContentResolver();
+                    Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, projection, null, null, ContactsContract.Contacts.DISPLAY_NAME_PRIMARY);
 
-                        if (cursor != null) {
-                            List<String> contacts = new ArrayList<String>();
-                            while (cursor.moveToNext()) {
-                                contacts.add(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)));
-                            }
-                            cursor.close();
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.contact_detail, R.id.name, contacts);
-                            contactNames.setAdapter(adapter);
+                    if (cursor != null) {
+                        List<String> contacts = new ArrayList<String>();
+                        while (cursor.moveToNext()) {
+                            contacts.add(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)));
                         }
-                        Log.d(TAG, " fab onClick:ends ");
+                        cursor.close();
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.contact_detail, R.id.name, contacts);
+                        contactNames.setAdapter(adapter);
                     }
+                }
             }
         });
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        Log.d(TAG, "onRequestPermissionsResult: Starts");
-//        switch (requestCode) {
-//            case REQUEST_CODE_READ_CONTACTS: {
-//                //if request is cancelled , the rest arrays are empty
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-//                    // permission was granted
-//                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
-////                    READ_CONTACTS_GRANTED = true;
-//                } else {
-//                    Log.d(TAG, "onRequestPermissionsResult:  Permission refused");
-//                }
-//                //fab.setEnabled(READ_CONTACTS_GRANTED);
-//            }
-//        }
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
