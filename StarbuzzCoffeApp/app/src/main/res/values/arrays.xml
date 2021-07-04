@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="options">options
+        <item>Drinks</item>
+        <item>Food</item>
+        <item>Stores</item>
+    </string-array>
+
+    <string-array name="drinks">drinks
+    <item>Latte</item>
+    <item>Cappuccino</item>
+    <item>Filter</item>
+</string-array>
+</resources>

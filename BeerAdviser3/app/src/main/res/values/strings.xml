@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">BeerAdviser3</string>
+    <string name="find_beer">Find Beer!</string>
+    <string name="brands"></string>
+    <string name="ursus_beer">Ursus</string>
+    <string name="ciuc_beer">Ciuc</string>
+    <string name="beer_bergenbier">Bergenbier</string>
+    <string name="beer_stela">Stela</string>
+    <string name="beer_color">amber</string>
+    <string-array name="beer_colors">
+        <item> black </item>
+        <item> brown </item>
+        <item> blonde </item>
+        <item> dark </item>
+        <item> amber </item>
+    </string-array>
+</resources>

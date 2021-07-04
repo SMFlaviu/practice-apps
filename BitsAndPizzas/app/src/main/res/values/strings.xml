@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">BitsAndPizzas</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="create_order">Create Order</string>
+    <string name="share_content">Share Content</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="pizzas">
+        <item>Diavolo</item>
+        <item>Funghi</item>
+    </string-array>
+    <string-array name="pasta">
+        <item>Spaghetti Bolognese</item>
+        <item>Lasagne</item>
+    </string-array>
+    <string-array name="stores">
+        <item>Cambridge</item>
+        <item>Oxford</item>
+    </string-array>
+    <string-array name="titles">
+        <item>Home</item>
+        <item>Pizzas</item>
+        <item>Pasta</item>
+        <item>Stores</item>
+    </string-array>
+</resources>
